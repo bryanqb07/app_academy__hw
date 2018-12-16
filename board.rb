@@ -11,6 +11,7 @@ class Board
   end
 
   def from_file
+    debugger
     File.readlines(@@file).each_with_index do |line, idx|
       line.chomp.to_s.split('').each_with_index do |val, idx2|
         if val == "0"
@@ -38,11 +39,9 @@ class Board
      @grid.each{|row| row.join(' ')}
   end
 
-
 end
 
-# if $PROGRAM_NAME == __FILE__
-#   test = Board.new
-#   test.from_file
-#   test.render
-# end
+if $PROGRAM_NAME == __FILE__
+  test = Board.new
+  test.from_file
+end
