@@ -6,19 +6,17 @@ require 'byebug'
 class Board
   @@file = 'sudoku1.txt'
 
+  attr_reader :grid
+
   def initialize
     @grid = Array.new(9){Array.new(9)}
+    from_file
   end
 
   def from_file
-    debugger
     File.readlines(@@file).each_with_index do |line, idx|
       line.chomp.to_s.split('').each_with_index do |val, idx2|
-        if val == "0"
-          @grid[idx][idx2] = Tile.new(val.red)
-        else
-          @grid[idx][idx2] = Tile.new(val.blue, true)
-        end
+          @grid[idx][idx2] = Tile.new(val) #red
       end
     end
   end
@@ -34,14 +32,23 @@ class Board
     @grid[row][col] = val
   end
 
-  def render
-     system("clear")
-     @grid.each{|row| row.join(' ')}
-  end
+  # def render
+  #    system("clear")
+  #    debugger
+  #    puts @grid.each{|row| "#{row.join(' ')}"}
+  # end
 
+  def render
+  puts "  #{(0..8).to_a.join(' ')}"
+  puts "  __________________"
+  grid.each_with_index do |row, i|
+    puts "#{i}| #{row.join(' ')}|"
+  end
 end
 
+
+end
+#
 if $PROGRAM_NAME == __FILE__
-  test = Board.new
-  test.from_file
+  Board.new.render
 end

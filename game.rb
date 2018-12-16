@@ -1,15 +1,17 @@
 require_relative 'board'
-class SodokuGame
+require 'byebug'
+class SudokuGame
   def initialize
     @board = Board.new
-    @board.from_file
   end
 
   def play
-    unless self.won?
+    while !self.won?
+      # debugger
       @board.render
       pos, val = guess_prompt
       update(pos, val)
+    end
   end
 
   def guess_prompt
@@ -17,10 +19,10 @@ class SodokuGame
     print "Position: "
     pos = gets.chomp
     int_pos = parse(pos)
-    puts
+    puts ""
     print "Value: "
     val = gets.chomp
-    int_pos, val
+    [int_pos, val]
   end
 
 
@@ -40,4 +42,9 @@ class SodokuGame
   def won?
     false
   end
+
+end
+
+if $PROGRAM_NAME == __FILE__
+  SudokuGame.new.play
 end
