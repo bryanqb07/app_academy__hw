@@ -42,17 +42,39 @@ class Board
   puts ""
   end
   #
-  # def win
-  #   winning_combo = [1,2,3,4,5,6,7,8,9]
-  #   int_grid = self.dup
+  def won?
+    win = [1,2,3,4,5,6,7,8,9]
+    val_grid = self.dup
+    row_align?(val_grid, win) && col_align?(val_grid,win)
+  end
+
+  def row_align?(grid, win)
+    grid.each{|row| return false unless row.sort == win}
+    true
+  end
+
+
+  def col_align?(grid, win)
+    (grid.length).times do |i|
+      col = []
+      grid.each do |row|
+        col << row[i]
+      end
+      return false unless col.sort == win
+    end
+    true
+  end
+
+  # def square_align?(win)
   # end
-  #
-  # def dup
-  #   duped_grid = grid.map do |row|
-  #     row.map {|tile| Tile.new(tile.value_to_i)}
-  #   end
-  #   Board.new(duped_grid)
-  # end
+
+
+  def dup
+    duped_grid = grid.map do |row|
+      row.map {|tile| tile.value}
+    end
+    duped_grid
+  end
 
   private
   attr_reader :grid

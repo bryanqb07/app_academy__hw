@@ -3,6 +3,7 @@ require 'byebug'
 class SudokuGame
   def initialize
     @board = Board.new
+    @dup = Board.new(@board.dup)
   end
 
   def play
@@ -47,18 +48,23 @@ class SudokuGame
     [pos_arr[0].to_i, pos_arr[1].to_i]
   end
 
-
-
   def update(pos,val)
     if @board[pos].given?
       @board[pos] = val.colorize(:green)
+      @dup[pos].value = val.to_i
     else
       puts "Original board values cannot be altered. Please try again."
     end
   end
 
   def won?
-    false
+    if @dup.won?
+      @board.render
+      puts "Congratulations! You win!"
+      true
+    else
+      false
+    end
   end
 
 end
