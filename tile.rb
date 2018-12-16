@@ -2,8 +2,8 @@
 
 class Tile
   def initialize(value, given = false)
-    @value = value
-    @given = (@value == "0")
+    @value = value.to_i
+    @given = (@value == 0)
   end
 
   def given?

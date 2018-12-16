@@ -4,12 +4,13 @@ require 'byebug'
 
 
 class Board
-  @@file = 'sudoku1.txt'
+  # @@file = 'sudoku1.txt'
+  @@file = 'test_win.txt'
+  @@empty_grid = Array.new(9){Array.new(9)}
 
-  attr_reader :grid
 
-  def initialize
-    @grid = Array.new(9){Array.new(9)}
+  def initialize(grid = @@empty_grid)
+    @grid = grid
     from_file
   end
 
@@ -32,23 +33,28 @@ class Board
     @grid[row][col] = val
   end
 
-  # def render
-  #    system("clear")
-  #    debugger
-  #    puts @grid.each{|row| "#{row.join(' ')}"}
-  # end
-
   def render
-  puts "  #{(0..8).to_a.join(' ')}"
+  puts "   #{(0..8).to_a.join(' ')}"
   puts "  __________________"
   grid.each_with_index do |row, i|
     puts "#{i}| #{row.join(' ')}|"
   end
-end
+  puts ""
+  end
+  #
+  # def win
+  #   winning_combo = [1,2,3,4,5,6,7,8,9]
+  #   int_grid = self.dup
+  # end
+  #
+  # def dup
+  #   duped_grid = grid.map do |row|
+  #     row.map {|tile| Tile.new(tile.value_to_i)}
+  #   end
+  #   Board.new(duped_grid)
+  # end
 
+  private
+  attr_reader :grid
 
-end
-#
-if $PROGRAM_NAME == __FILE__
-  Board.new.render
 end
